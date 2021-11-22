@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fest/resources/app_fonts.dart';
+import 'package:flutter_fest/resources/resources.dart';
 
 class ScheduleRowSessionWidget extends StatelessWidget {
   const ScheduleRowSessionWidget({Key? key}) : super(key: key);
@@ -9,17 +10,29 @@ class ScheduleRowSessionWidget extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF101115),
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.0),
+        ),
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.only(left: 16, top: 4, right: 4, bottom: 16),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 8,
+      ), //all(
       child: Column(
         children: [
           Row(
             children: const [
-              _SpeakerWidget(),
+              Expanded(
+                child: _SpeakerWidget(),
+              ),
               _FavoriteWidget(),
             ],
           ),
-          const _DescriptionWidget(),
+          const Padding(
+            padding: EdgeInsets.only(right: 12),
+            child: _DescriptionWidget(),
+          ),
         ],
       ),
     );
@@ -44,14 +57,19 @@ class _SpeakerWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        const Text(
-          "Frank Lampard",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontFamily: AppFonts.basisGrotesquePro,
-            fontWeight: FontWeight.w500,
-            height: 1.4285714286,
+        const Expanded(
+          child: Text(
+            "Frank Lampard",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontFamily: AppFonts.basisGrotesquePro,
+              fontWeight: FontWeight.w500,
+              height: 1.4285714286,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.fade,
+            softWrap: false,
           ),
         ),
       ],
@@ -64,7 +82,14 @@ class _FavoriteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return IconButton(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onPressed: () {
+        print("favourite");
+      },
+      icon: Image.asset(AppImages.bookmark),
+    );
   }
 }
 
@@ -73,6 +98,14 @@ class _DescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Text(
+      "Chelsea - Juventus UCL group stage",
+      style: TextStyle(
+        color: Colors.white.withOpacity(0.88),
+        fontSize: 18,
+        fontFamily: AppFonts.steinbeck,
+        height: 1.22,
+      ),
+    );
   }
 }

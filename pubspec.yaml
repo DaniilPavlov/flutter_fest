@@ -67,6 +67,9 @@ flutter:
       - asset: assets/fonts/basis_grotesque_pro/regular.ttf
       - asset: assets/fonts/basis_grotesque_pro/medium.ttf
         weight: 500 
+  - family: Steinbeck
+    fonts:
+      - asset: assets/fonts/steinbeck/regular.ttf 
   # fonts:
   #   - family: Schyler
   #     fonts:
