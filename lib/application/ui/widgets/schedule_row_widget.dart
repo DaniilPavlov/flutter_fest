@@ -16,10 +16,21 @@ class _ScheduleRowSingleSessionWidget extends ScheduleRowWidget {
 
   @override
   Widget build(BuildContext context) {
+    const configuration = ScheduleRowSessionWidgetConfiguration(
+      avatarUrl:
+          'https://www.thechelseachronicle.com/static/uploads/17/2021/11/GettyImages-1236875236-768x512.jpg',
+      speakerName: 'Frank Lampard',
+      sessionTitle: 'Chelsea - Juventus UCL group stage',
+      isFavorite: true,
+      progressStatus:
+          ScheduleRowSessionWidgetConfigurationProgressStatus.oncoming,
+    );
     return Row(
       children: const [
-         Expanded(
-          child: ScheduleRowSessionWidget(),
+        Expanded(
+          child: ScheduleRowSessionWidget(
+            configuration: configuration,
+          ),
         ),
       ],
     );
