@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_fest/application/ui/widgets/schedule_row_session_widget.dart';
 import 'package:flutter_fest/application/ui/widgets/schedule_row_time_widget.dart';
@@ -19,82 +17,48 @@ class _ScheduleRowSingleSessionWidget extends ScheduleRowWidget {
 
   @override
   Widget build(BuildContext context) {
+    const progressStatus = ScheduleRowWidgetConfigurationProgressStatus.current;
     const configuration = ScheduleRowSessionWidgetConfiguration(
       avatarUrl:
           'https://www.thechelseachronicle.com/static/uploads/17/2021/11/GettyImages-1236875236-768x512.jpg',
       speakerName: 'Timo Werner',
-      sessionTitle: 'Zenit - Chelsea UCL group stage',
+      sessionTitle: 'Zenit 3 - 3 Chelsea UCL group stage',
       isFavorite: true,
-      progressStatus: ScheduleRowWidgetConfigurationProgressStatus.oncoming,
+      progressStatus: progressStatus,
     );
-    //IntrinsicHeight - это виджет, который можно использовать для изменения
-    //высоты своего дочернего элемента на внутреннюю высоту дочернего элемента.
-    //Это может быть полезно в тех случаях, когда доступное пространство
-    //высоты неограничено, и вы хотите установить высоту виджета в соответствии
-    //с его внутренней высотой.
+
+    const exampleLecture = ScheduleRowTimeWidgetConfiguration(
+      startTime: "21:45",
+      endTime: "23:30",
+      progressStatus: progressStatus,
+    );
+
+    // IntrinsicHeight - это виджет, который можно использовать для изменения
+    // высоты своего дочернего элемента на внутреннюю высоту дочернего элемента.
+    // Это может быть полезно в тех случаях, когда доступное пространство
+    // высоты неограничено, и вы хотите установить высоту виджета в соответствии
+    // с его внутренней высотой.
+
+    // с учетом того, что у нас максимум будет 10 ячеек с лекциями,
+    // останавливаемся на варианте с IntrinsicHeight (проблем с
+    // производительностью не будет)
+    // для больших списков тако подход не годится, потому что динамические
+    // рассчеты очень тяжелы
     return IntrinsicHeight(
-      //заменили роу на  кастом лэйаут
-      child: SizedBox(
-        height: 100,
-        //infinity height
-        child: CustomMultiChildLayout(
-          delegate: RowLayoutDelegate(),
-          children: [
-            LayoutId(
-              id: 1,
-              child: const ScheduleRowTimeWidget(),
+      child: Row(
+        children: const [
+          ScheduleRowTimeWidget(
+            configuration: exampleLecture,
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: ScheduleRowSessionWidget(
+              configuration: configuration,
             ),
-            LayoutId(
-              id: 2,
-              child: const ScheduleRowSessionWidget(
-                configuration: configuration,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
-  }
-}
-
-class RowLayoutDelegate extends MultiChildLayoutDelegate {
-  @override
-  Size getSize(BoxConstraints constraints) {
-    final size = super.getSize(constraints);
-    return size;
-  }
-
-  @override
-  void performLayout(Size size) {
-    //общий размер 335 на 90
-    const firstChildWidth = 48.0;
-    const spaceChildWidth = 12.0;
-    const secondChildXOffset = firstChildWidth + spaceChildWidth;
-    var secondChildSize = Size.zero;
-    if (hasChild(2)) {
-      final maxWidth = size.width - secondChildXOffset;
-      secondChildSize = layoutChild(
-        2,
-        BoxConstraints(maxWidth: maxWidth),
-      );
-    }
-    if (hasChild(1)) {
-      final maxHeight = max(secondChildSize.height, 90.0);
-      layoutChild(
-        1,
-        BoxConstraints(
-          maxWidth: firstChildWidth,
-          maxHeight: maxHeight,
-        ),
-      );
-    }
-    positionChild(1, Offset.zero);
-    positionChild(2, const Offset(secondChildXOffset, 0));
-  }
-
-  @override
-  bool shouldRelayout(covariant RowLayoutDelegate oldDelegate) {
-    return false;
   }
 }
 
