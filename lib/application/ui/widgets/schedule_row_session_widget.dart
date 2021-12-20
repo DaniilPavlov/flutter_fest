@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/ui/themes/app_colors.dart';
+import 'package:flutter_fest/application/ui/themes/app_text_style.dart';
 import 'package:flutter_fest/application/ui/widgets/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/app_fonts.dart';
 import 'package:flutter_fest/resources/resources.dart';
@@ -83,7 +85,7 @@ class _SpeakerWidget extends StatelessWidget {
         Expanded(
           child: Text(
             configuration.speakerName,
-            style: TextStyle(
+            style: AppTextStyle.bookText.copyWith(
               color: configuration._style.speakerNameColor,
               fontSize: 14,
               fontFamily: AppFonts.basisGrotesquePro,
@@ -136,7 +138,7 @@ class _DescriptionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       configuration.sessionTitle,
-      style: TextStyle(
+      style: AppTextStyle.steinbeckNormalText.copyWith(
         color: configuration._style.sessionTitleColor,
         fontSize: 18,
         fontFamily: AppFonts.steinbeck,
@@ -200,21 +202,21 @@ class ScheduleRowSessionWidgetConfiguration {
 
   static const oncomingStyle =
       _ScheduleRowSessionWidgetConfigurationProgressStyle(
-    widgetBackground: Color(0xFF101115),
-    speakerNameColor: Color(0xFF52525E),
+    widgetBackground: AppColors.darkSecondary,
+    speakerNameColor: AppColors.darkText,
     sessionTitleColor: Colors.white,
   );
 
   static const pastStyle = _ScheduleRowSessionWidgetConfigurationProgressStyle(
     widgetBackground: Colors.transparent,
-    speakerNameColor: Color(0x7A52525E),
-    sessionTitleColor: Color(0xFF52525E),
+    speakerNameColor: AppColors.darkText48,
+    sessionTitleColor: AppColors.darkText,
   );
 
   static const isFavoriteStyle =
       _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
-    favoriteButtonColor: Color(0xFF00BD13),
-    widgetBackgroundGradient: Color(0xFF00BD13),
+    favoriteButtonColor: AppColors.green,
+    widgetBackgroundGradient: AppColors.green,
     favoriteButtonIcon: AppImages.bookmarkFull,
   );
 
