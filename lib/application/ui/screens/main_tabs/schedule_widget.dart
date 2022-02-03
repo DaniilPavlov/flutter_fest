@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_fest/application/ui/themes/app_colors.dart';
+import 'package:flutter_fest/application/ui/widgets/dialogs/cupertino_dialog_widget.dart';
 import 'package:flutter_fest/application/ui/widgets/schedule_row/schedule_row_break_widget.dart';
 import 'package:flutter_fest/application/ui/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/application/ui/widgets/top_notifications/top_notification_manager.dart';
@@ -10,7 +13,50 @@ class ScheduleWidget extends StatelessWidget {
   const ScheduleWidget({Key? key}) : super(key: key);
 
   void showOverlay(BuildContext context) {
-    context.read<TopNotificationManager>().show("Notification");
+    // context.read<TopNotificationManager>().show("Notification");
+
+    showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.8),
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 3,
+            sigmaY: 3,
+          ),
+          child: CupertionDialogWidget(
+            title: "Хотите получить напоминание за 10 минут до начала лекции?",
+            actions: [
+              DialogActionConfiguration("Не надо", true, () {}),
+              DialogActionConfiguration("Да", false, () {}),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget makeAndroidDialog() {
+    return AlertDialog(
+      title: const Text('AlertDialog Title'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: const <Widget>[
+            Text('This is a demo alert dialog.'),
+            Text('Would you like to approve of this message?'),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Approve'),
+          onPressed: () {
+            // Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
   }
 
   @override
